@@ -1,0 +1,91 @@
+<html lang="pt-BR">
+    <meta charset="UTF-8">
+    <head>
+        <title> Index </title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.3.0/dist/themes/light.css" />
+        <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.3.0/dist/shoelace-autoloader.js"></script>
+        <!-- chart-components/-->
+        <!-- <script src="chart-components/bar-chart.js" type="module"></script> -->
+        <script src="chart-components/line-chart.js" type="module"></script>
+        <!-- <script src="chart-components/colorscale.js" type="module"></script> -->
+        <script src="chart-components/matrix-view.js" type="module"></script>
+		<script src="chart-components/player-component.js" type="module"></script>
+
+		<link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+		<div style="display: flex;">
+			<svg width="500" height="350" class="container-svg" style="flex: none;">
+				<defs>
+					<marker id="arrowhead" markerWidth="10" markerHeight="7"
+							refX="8" refY="3.5" orient="auto">
+					  <polygon points="0 0, 10 3.5, 0 7" />
+					</marker>
+					
+					<marker id="arrowheadselected" markerWidth="10" markerHeight="7"
+							refX="8" refY="3.5" orient="auto" fill="crimson">
+					  <polygon points="0 0, 10 3.5, 0 7" />
+					</marker>
+
+					<marker id="arrowheadopacity" markerWidth="10" markerHeight="7"
+							refX="8" refY="3.5" orient="auto" opacity=".1">
+					  <polygon points="0 0, 10 3.5, 0 7" />
+					</marker>
+				</defs>
+				<g id="main-area">
+
+				</g>
+			</svg>
+			<div>
+				<div id="action-history">
+					
+				</div>
+			</div>
+			<div style="display: table-row; margin: 30px;">
+				<div>
+					<svg width="250" height="150" id="controls" style="stroke: black;">
+						<rect x="5" y="10" width="230" height="130" style="stroke:black; fill:white"></rect>
+						<g transform="scale(2.5)">
+							<g transform="translate(10,30)" id="left">
+								<line x1="10" y1="0" x2="0" y2="0" stroke-width="2"
+									marker-end="url(#arrowhead)" />
+							</g>
+							<g transform="translate(50,30)" id="right" fill="crimson">
+								<line x1="0" y1="0" x2="0" y2="0" stroke-width="2"
+									marker-end="url(#arrowheadselected)" />
+							</g>
+							<circle cx="75" cy="30" r="10" id="propulsor"></circle>
+						</g>
+					</svg>
+				</div>
+				<div class="episode-display">
+					Episode: 2689
+				</div>	
+				<div class="timestep-display">
+					Timestep: 192
+				</div>
+				<div>
+					<sl-button> </sl-button>	
+  					<time-player></time-player>
+				</div>
+			</div>
+			<div class="container-svg" >
+				<svg id="arrow-svg" style="stroke: black;">
+					<g id="arrow-area"> </g>
+				</svg>
+			</div>
+		</div>
+		<div>
+			<linechart-view id="episode-chart"></linechart-view>
+			<div class="episode-display">
+				Episode: 2689
+			</div>	
+			<linechart-view id="timestep-chart"></linechart-view>
+		</div>
+    </body>
+
+	<script src="app.js" type="module"></script>
+</html>

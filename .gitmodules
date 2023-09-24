@@ -1,0 +1,3 @@
+[submodule "chart-components"]
+	path = chart-components
+	url = https://github.com/tiagodavi70/chart-components.git

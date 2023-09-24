@@ -1,0 +1,26 @@
+* {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, monospace;
+}
+
+.item-box {
+	border: 1px solid black;
+	margin: 20px;
+	width: 12vw;
+	padding: 10px;
+	border-radius: 30px;
+}
+
+#action-history {
+	overflow-y: scroll;
+	height: 45vh;
+}
+
+#controls {
+	border: 1px solid black;
+	margin: 20px;
+}
+
+.container-svg {
+	border: 1px solid black;
+	margin: 20px;
+}
