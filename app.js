@@ -260,8 +260,8 @@ function selectEpisode(selectionData) {
 };
 
 function loadData() {
-	d3.csv("data/RLLunarLanding2023.3.csv", d3.autoType).then(dataR => {
-	// d3.csv("data/data.csv", d3.autoType).then(dataR => {
+	d3.csv("dataTest/RLLunarLanding2023.3.csv", d3.autoType).then(dataR => {
+	// d3.csv("dataTest/data.csv", d3.autoType).then(dataR => {
 		data = dataR;
 		
 		let rewardLine = rewardLineChart(data, selectedEpisode);
