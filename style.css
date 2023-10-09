@@ -1,10 +1,49 @@
 * {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, monospace;
+	--small-margin: 1vw;
+}
+
+img,
+picture,
+video {
+  max-width: 100%;
+}
+
+@media (max-width:900px) and (orientation: portrait){
+	.custom-vis {
+		column-count: 1;
+		display: block;
+	}
+	.container-svg {
+		width: 870px;
+		height: 88vh;
+	}
+}
+
+@media (min-width:901px){
+	.custom-vis {
+		display: flex;
+		column-count: auto;
+	}
+	.container-svg {
+		width: 700px;
+		height: 48vh;
+	}
+}
+
+.custom-vis {
+	border: 3px solid grey;
+	margin: var(--small-margin);
+}
+
+.vis-svg {
+	border: 1px solid CadetBlue;
+	margin: var(--small-margin);
 }
 
 .item-box {
-	border: 1px solid black;
-	margin: 20px;
+	border: 1px solid CadetBlue;
+	margin: var(--small-margin);
 	width: 12vw;
 	padding: 10px;
 	border-radius: 30px;
@@ -13,14 +52,23 @@
 #action-history {
 	overflow-y: scroll;
 	height: 45vh;
+	margin: var(--small-margin);
 }
 
 #controls {
-	border: 1px solid black;
-	margin: 20px;
+	border: 1px solid CadetBlue;
+	margin: var(--small-margin);
 }
 
 .container-svg {
-	border: 1px solid black;
-	margin: 20px;
+	border: 1px solid CadetBlue;
+	margin: var(--small-margin);
+}
+
+/* .custom-vis > *{
+	flex: 1;
+} */
+
+#location-area {
+	flex: 8;
 }

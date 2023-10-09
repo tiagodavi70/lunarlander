@@ -1,5 +1,5 @@
 <html lang="pt-BR">
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <head>
         <title> Index </title>
         <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -12,76 +12,86 @@
         <!-- <script src="chart-components/colorscale.js" type="module"></script> -->
         <script src="chart-components/matrix-view.js" type="module"></script>
 		<script src="chart-components/player-component.js" type="module"></script>
+		<script src="chart-components/continuous-legend.js" type="module"></script>
 
 		<link rel="stylesheet" href="style.css">
     </head>
     
     <body>
-		<div style="display: flex;">
-			<svg width="500" height="350" class="container-svg" style="flex: none;">
-				<defs>
-					<marker id="arrowhead" markerWidth="10" markerHeight="7"
-							refX="8" refY="3.5" orient="auto">
-					  <polygon points="0 0, 10 3.5, 0 7" />
-					</marker>
-					
-					<marker id="arrowheadselected" markerWidth="10" markerHeight="7"
-							refX="8" refY="3.5" orient="auto" fill="crimson">
-					  <polygon points="0 0, 10 3.5, 0 7" />
-					</marker>
-
-					<marker id="arrowheadopacity" markerWidth="10" markerHeight="7"
-							refX="8" refY="3.5" orient="auto" opacity=".1">
-					  <polygon points="0 0, 10 3.5, 0 7" />
-					</marker>
-				</defs>
-				<g id="main-area">
-
-				</g>
-			</svg>
-			<div>
+		<div class="custom-vis">
+			<div >
+				<svg id="location-area" class="vis-svg" style="flex: none;">
+					<defs>
+						<marker id="arrowhead" markerWidth="10" markerHeight="7"
+								refX="8" refY="3.5" orient="auto">
+						  <polygon points="0 0, 10 3.5, 0 7" />
+						</marker>
+						
+						<marker id="arrowheadselected" markerWidth="10" markerHeight="7"
+								refX="8" refY="3.5" orient="auto" fill="crimson">
+						  <polygon points="0 0, 10 3.5, 0 7" />
+						</marker>
+	
+						<marker id="arrowheadopacity" markerWidth="10" markerHeight="7"
+								refX="8" refY="3.5" orient="auto" opacity=".1">
+						  <polygon points="0 0, 10 3.5, 0 7" />
+						</marker>
+					</defs>
+					<rect id="base-land"></rect>
+					<g id="main-area">
+	
+					</g>
+				</svg>
+			</div>
+			<div id="action-container">
 				<div id="action-history">
-					
+					<svg></svg>
 				</div>
 			</div>
-			<div style="display: table-row; margin: 30px;">
+			<div style="display: table-row; margin: 10px;" id="container-controls">
 				<div>
-					<svg width="250" height="150" id="controls" style="stroke: black;">
-						<rect x="5" y="10" width="230" height="130" style="stroke:black; fill:white"></rect>
+					<svg width="250" height="120" id="controls" id="svg-controls">
+						<rect x="5" y="10" width="30" height="30" id="action0" class="action"  style="stroke:DarkCyan; fill:DarkCyan"></rect>
 						<g transform="scale(2.5)">
-							<g transform="translate(10,30)" id="left">
-								<line x1="10" y1="0" x2="0" y2="0" stroke-width="2"
-									marker-end="url(#arrowhead)" />
+							<g transform="translate(10,30)" id="action1" stroke="black" fill="DarkCyan" class="action">
+								<!-- <line x1="10" y1="0" x2="0" y2="0" stroke-width="2"
+									marker-end="url(#arrowhead)" /> -->
+								<polygon points="0 0, 15 -10, 15 10" stroke="DarkCyan"/>
 							</g>
-							<g transform="translate(50,30)" id="right" fill="crimson">
-								<line x1="0" y1="0" x2="0" y2="0" stroke-width="2"
-									marker-end="url(#arrowheadselected)" />
+							<g transform="translate(40,30)" id="action3" fill="DarkCyan" class="action">
+								<!-- <line x1="0" y1="0" x2="0" y2="0" stroke-width="2"
+									marker-end="url(#arrowheadselected)" /> -->
+								<polygon points="15 0, 0 -10, 0 10" stroke="DarkCyan" />
 							</g>
-							<circle cx="75" cy="30" r="10" id="propulsor"></circle>
+							<circle cx="75" cy="30" r="10" id="action2" fill="DarkCyan" class="action"></circle>
 						</g>
 					</svg>
 				</div>
 				<div class="episode-display">
-					Episode: 2689
+					Episode: ---
 				</div>	
 				<div class="timestep-display">
-					Timestep: 192
+					Timestep: 0
 				</div>
 				<div>
-					<sl-button> </sl-button>	
-  					<time-player></time-player>
+					<time-player id="player"></time-player>
 				</div>
 			</div>
-			<div class="container-svg" >
-				<svg id="arrow-svg" style="stroke: black;">
+			<div >
+				<svg id="arrow-svg" class="vis-svg" style="stroke: black;">
+					<rect id="base-land"></rect>
 					<g id="arrow-area"> </g>
 				</svg>
+				<div style="display: flex;">
+					<p style="margin-left: 20px">Angular Velocity</p>
+					<continuous-legend id="velocity-legend"></continuous-legend>
+				</div>
 			</div>
 		</div>
 		<div>
 			<linechart-view id="episode-chart"></linechart-view>
 			<div class="episode-display">
-				Episode: 2689
+				Episode: ---
 			</div>	
 			<linechart-view id="timestep-chart"></linechart-view>
 		</div>
