@@ -222,7 +222,7 @@ function updateUI(data) {
 	return {"historic": history, "agent": agent, "velocity": velocity, "timestep": timestep}
 }
 
-let data = {};
+let data = [];
 function selectEpisode(selectionData) {
 
 	let episode = selectionData.i;
@@ -260,14 +260,17 @@ function selectEpisode(selectionData) {
 };
 
 function loadData() {
-	d3.csv("dataTest/RLLunarLanding2023.3.csv", d3.autoType).then(dataR => {
+	// d3.csv("dataTest/RLLunarLanding2023.3.csv", d3.autoType).then(dataR => {
 	// d3.csv("dataTest/data.csv", d3.autoType).then(dataR => {
-		data = dataR;
+	// d3.csv(`data/data_${1}.csv`, d3.autoType).then(jj => {console.log(jj.length)})
+	Promise.all(d3.range(1,11).map(index => d3.csv(`data/data_${index}.csv`, d3.autoType))).then((alldata) => {
+		for (let i = 0; i < alldata.length; i++ ) {
+			data = data.concat(alldata[i]);
+			console.log(data.length);
+		}
 		
 		let rewardLine = rewardLineChart(data, selectedEpisode);
 		rewardLine.interactive = true;
-		// console.log(data[selectedEpisode]);
-		// rewardLine.point = {"x": selectedEpisode, "y": data[selectedEpisode].Reward};
 		rewardLine.cb = selectEpisode;
 		selectEpisode({"i": selectedEpisode});
 	});
