@@ -23,7 +23,7 @@ let midW = rW/2;
 let diffW = (rW + r/2)/2;
 let diffH = (rW + r/2)/2;
 
-let selectedEpisode = 2327; // 400, 760, 800, 950, 2642, 2830, 2689, 2327
+let selectedEpisode = 2413;
 
 let opaque = 1;
 let thin = .01;
@@ -104,7 +104,7 @@ function agentPlot(actions, rotate=true) {
 	let highlight_condition = (d,i) => (i % (timeHighlight) == 0)  || (i == actions.length - 1);
 	let agentSVG = d3.select("#location-area")
 			.attr("width", agentW - 10)
-			.attr("height", agentH - 10)
+			.attr("height", agentH - 80)
 		.select("#main-area")
 		.selectAll("g")
 		.data(actions)
@@ -157,7 +157,7 @@ function velocityPlot(actions, rotate=true) {
 		.domain([d3.min(actions, d => d.av), d3.max(actions, d => d.av)]);
 	let color = d3.scaleLinear()
 		.range(["indigo", "purple","orange"])
-		.domain([0, d3.max(actions, d => d.av)/2, d3.max(actions, d => d.av).toFixed(2)]);
+		.domain([0, d3.max(actions, d => d.av)/2, d3.max(actions, d => d.av*1.).toFixed(2)]);
 
 	let legend = document.querySelector("#velocity-legend")
 	legend.data = color.domain();
@@ -189,13 +189,13 @@ function velocityPlot(actions, rotate=true) {
 
 function rewardLineChart(rewards, selectedEpisode=-1) {
 
-	let dat = d3.rollup(rewards, group => d3.sum(group, g => g["Reward"]), d => d["Episode"]);
+	let dat = d3.rollup(rewards, group => d3.sum(group, g => +g["Reward"]), d => d["Episode"]);
 	
 	dat = Array.from(dat).map(d => ({"Reward": d[1]}));
-	dat = dat.map((d,i) => ({"Reward": d["Reward"] < -50 ? -50 : d["Reward"], "i": i}));
+	dat = dat.map((d,i) => ({"Reward": (+d["Reward"]) < -200 ? -200 : +d["Reward"], "i": i}));
 	let linechart = setupLineChart(dat, "#episode-chart", "Reward");
 	if (selectedEpisode >= 0) {
-		linechart.point = {"x": selectedEpisode, "y": dat[selectedEpisode].Reward};
+		linechart.point = {"x": selectedEpisode, "y": +dat[selectedEpisode].Reward};
 	}
 	return linechart;
 }
@@ -228,6 +228,7 @@ function selectEpisode(selectionData) {
 	let episode = selectionData.i;
 	d3.selectAll(".episode-display").text(`Episode ${episode}`);
 	let dataFiltered = data.filter(d => d.Episode == episode); 
+	console.log(dataFiltered, data.map(d => d.Episode), episode);
 	dataFiltered.columns = data.columns;
 
 	let ui = updateUI(dataFiltered);
@@ -252,7 +253,7 @@ function selectEpisode(selectionData) {
 		ui.controls.selectAll(".action").style("fill", function(d, i) { 
 			return this.id[6] == datapoint.Action ? "crimson" : "DarkCyan"
 		});
-		ui.timestep.point = {"x": ts, "y": datapoint.Reward};
+		ui.timestep.point = {"x": ts, "y": +datapoint.Reward};
 		ui.historic
 			.style("stroke", (d, i) => i == ts ? "red" : "black")
 			.style("fill",   (d, i) => i == ts ? "red" : "DarkCyan")
@@ -262,13 +263,13 @@ function selectEpisode(selectionData) {
 function loadData() {
 	// d3.csv("dataTest/RLLunarLanding2023.3.csv", d3.autoType).then(dataR => {
 	// d3.csv("dataTest/data.csv", d3.autoType).then(dataR => {
+		// data = dataR;
+		
 	// d3.csv(`data/data_${1}.csv`, d3.autoType).then(jj => {console.log(jj.length)})
 	Promise.all(d3.range(1,11).map(index => d3.csv(`data/data_${index}.csv`, d3.autoType))).then((alldata) => {
 		for (let i = 0; i < alldata.length; i++ ) {
 			data = data.concat(alldata[i]);
-			console.log(data.length);
 		}
-		
 		let rewardLine = rewardLineChart(data, selectedEpisode);
 		rewardLine.interactive = true;
 		rewardLine.cb = selectEpisode;

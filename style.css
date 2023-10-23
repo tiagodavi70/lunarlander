@@ -1,6 +1,6 @@
 * {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, monospace;
-	--small-margin: 1vw;
+	--small-margin: .5vw;
 }
 
 img,
@@ -51,7 +51,7 @@ video {
 
 #action-history {
 	overflow-y: scroll;
-	height: 45vh;
+	height: 38vh;
 	margin: var(--small-margin);
 }
 
